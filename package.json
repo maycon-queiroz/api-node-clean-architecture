@@ -1,0 +1,8 @@
+{
+  "name": "api_node_tdd",
+  "version": "1.0.0",
+  "description": "learn clean architecture nodejs api",
+  "main": "index.js",
+  "author": "Maycon Queiroz <fmaycon@gmail.com>",
+  "license": "MIT"
+}
