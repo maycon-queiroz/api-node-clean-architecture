@@ -5,7 +5,18 @@
   "main": "index.js",
   "author": "Maycon Queiroz <fmaycon@gmail.com>",
   "license": "MIT",
+  "lint-staged": {
+    "*.js": [
+      "standard --fix",
+      "git add"
+    ]
+  },
   "devDependencies": {
+    "husky": "^7.0.0",
+    "lint-staged": "^12.3.7",
     "standard": "^16.0.4"
+  },
+  "scripts": {
+    "prepare": "husky install"
   }
 }
