@@ -6,7 +6,12 @@ module.exports = class LoginRouter {
   }
 
   route (httpRequest) {
-    if (typeof httpRequest === 'undefined' || !httpRequest.body) {
+    if (
+      typeof httpRequest === 'undefined' ||
+      !httpRequest.body ||
+      !this.authUserCase ||
+      !this.authUserCase.auth
+    ) {
       return HttpResponse.serverError()
     }
 
