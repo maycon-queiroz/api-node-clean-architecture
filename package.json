@@ -14,5 +14,10 @@
   "scripts": {
     "prepare": "husky install",
     "test": "jest"
+  },
+  "standard": {
+    "env": [
+      "jest"
+    ]
   }
 }
