@@ -4,5 +4,8 @@
   "description": "learn clean architecture nodejs api",
   "main": "index.js",
   "author": "Maycon Queiroz <fmaycon@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "standard": "^16.0.4"
+  }
 }
