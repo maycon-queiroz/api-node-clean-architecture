@@ -22,7 +22,7 @@ module.exports = class HttpResponse {
     }
   }
 
-  static successRequest () {
+  static success () {
     return {
       statusCode: 200
     }
