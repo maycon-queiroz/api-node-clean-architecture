@@ -14,6 +14,12 @@ module.exports = class HttpResponse {
     }
   }
 
+  static unauthorizedError () {
+    return {
+      statusCode: 401
+    }
+  }
+
   static successRequest () {
     return {
       statusCode: 200
