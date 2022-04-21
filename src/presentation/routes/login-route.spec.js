@@ -6,14 +6,14 @@ const ServerError = require('../helpers/server-error')
 
 const makeSut = () => {
   const authUseCaseSplay = makeAuthUseCase()
-  const emailValidatorSý = makeEmailValidator()
+  const emailValidatorSpy = makeEmailValidator()
 
-  const sut = new LoginRouter(authUseCaseSplay, emailValidatorSý)
+  const sut = new LoginRouter(authUseCaseSplay, emailValidatorSpy)
 
   return {
     sut,
     authUseCaseSplay,
-    emailValidatorSý
+    emailValidatorSpy
   }
 }
 
@@ -181,8 +181,8 @@ describe('Login Router', () => {
   })
 
   test('Should return 400 if an invalid email is provided', async () => {
-    const { sut, emailValidatorSý } = makeSut()
-    emailValidatorSý.isEmailValid = false
+    const { sut, emailValidatorSpy } = makeSut()
+    emailValidatorSpy.isEmailValid = false
     const httpRequest = {
       body: {
         email: 'any_email',
@@ -193,5 +193,35 @@ describe('Login Router', () => {
     const httpResponse = await sut.route(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new InvalidParamError('email'))
+  })
+
+  test('Should return 500 if no EmailValidator is provided', async () => {
+    const authUseCaseSplay = makeAuthUseCase()
+    const sut = new LoginRouter(authUseCaseSplay)
+    const httpRequest = {
+      body: {
+        email: 'invalid_any_email',
+        password: 'invalid_any_password'
+      }
+    }
+
+    const httpResponse = await sut.route(httpRequest)
+    expect(httpResponse.statusCode).toBe(500)
+    expect(httpResponse.body).toEqual(new ServerError())
+  })
+
+  test('Should return 500 if EmailValidator has no inValid method', async () => {
+    const authUseCaseSplay = makeAuthUseCase()
+    const sut = new LoginRouter(authUseCaseSplay, {})
+    const httpRequest = {
+      body: {
+        email: 'invalid_any_email',
+        password: 'invalid_any_password'
+      }
+    }
+
+    const httpResponse = await sut.route(httpRequest)
+    expect(httpResponse.statusCode).toBe(500)
+    expect(httpResponse.body).toEqual(new ServerError())
   })
 })
