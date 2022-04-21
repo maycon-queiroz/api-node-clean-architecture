@@ -13,8 +13,9 @@
   },
   "scripts": {
     "prepare": "husky install",
-    "test": "jest --watchAll",
-    "test:staged": "jest --passWithNoTests"
+    "test": "jest --watch --silent --colors --noStackTrace",
+    "test:staged": "jest --passWithNoTests --findRelatedTests --silent --noStackTrace",
+    "test:ci": "jest --coverage  --silent --noStackTrace"
   },
   "standard": {
     "env": [
