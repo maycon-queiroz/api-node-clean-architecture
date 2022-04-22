@@ -27,21 +27,37 @@ const makeLoadUserByEmailRepository = () => {
   }
   const loadUserByEmailRepositorySpy = new LoadUserByEmailRepositorySpy()
   loadUserByEmailRepositorySpy.user = {
+    id: 'any_id',
     password: 'hashed_Password'
   }
 
   return loadUserByEmailRepositorySpy
 }
 
+const makeTokenGenerator = () => {
+  class TokenGeneratorSpy {
+    async generator (userId) {
+      this.userId = userId
+      return this.accessToken
+    }
+  }
+
+  const tokenGeneratorSpy = new TokenGeneratorSpy()
+  tokenGeneratorSpy.accessToken = 'any_token'
+  return tokenGeneratorSpy
+}
+
 const makeSut = () => {
   const loadUserByEmailRepositorySpy = makeLoadUserByEmailRepository()
   const encryptSpy = makeEncrypt()
+  const tokenGeneratorSpy = makeTokenGenerator()
 
-  const sut = new AuthUseCase(loadUserByEmailRepositorySpy, encryptSpy)
+  const sut = new AuthUseCase(loadUserByEmailRepositorySpy, encryptSpy, tokenGeneratorSpy)
   return {
     sut,
     loadUserByEmailRepositorySpy,
-    encryptSpy
+    encryptSpy,
+    tokenGeneratorSpy
   }
 }
 
@@ -100,11 +116,17 @@ describe('Auth UseCase', () => {
 
   test('Should call Encrypt with correct values', async () => {
     const { sut, loadUserByEmailRepositorySpy, encryptSpy } = makeSut()
-    loadUserByEmailRepositorySpy.user = {}
     encryptSpy.isValid = false
     await sut.auth('valid_email@gmail.com', 'any_password')
 
     expect(encryptSpy.password).toBe('any_password')
     expect(encryptSpy.hashedPassword).toBe(loadUserByEmailRepositorySpy.user.password)
+  })
+
+  test('Should call TokenGenerator with correct userId', async () => {
+    const { sut, loadUserByEmailRepositorySpy, tokenGeneratorSpy } = makeSut()
+    await sut.auth('valid_email@gmail.com', 'valid_password')
+
+    expect(tokenGeneratorSpy.userId).toBe(loadUserByEmailRepositorySpy.user.id)
   })
 })
