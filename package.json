@@ -23,5 +23,8 @@
     "env": [
       "jest"
     ]
+  },
+  "dependencies": {
+    "validator": "^13.7.0"
   }
 }
