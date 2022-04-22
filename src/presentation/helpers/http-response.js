@@ -1,5 +1,5 @@
 
-const ServerError = require('./server-error')
+const { ServerError } = require('../errors/index')
 
 module.exports = class HttpResponse {
   static badRequest (error) {
