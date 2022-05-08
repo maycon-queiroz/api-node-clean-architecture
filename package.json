@@ -5,6 +5,12 @@
   "main": "index.js",
   "author": "Maycon Queiroz <fmaycon@gmail.com>",
   "license": "MIT",
+  "engines": {
+    "npm": ">=8.3.0"
+  },
+  "overrides": {
+    "source-map": "0.8.0-beta.0"
+  },
   "devDependencies": {
     "husky": "^7.0.0",
     "jest": "^27.5.1",
@@ -13,8 +19,8 @@
   },
   "scripts": {
     "prepare": "husky install",
-    "test": "jest --silent --colors --noStackTrace --passWithNoTests",
-    "test:unit": "yarn test -- --watch -c jest-unit-config.js",
+    "test": "jest --silent --colors --noStackTrace --passWithNoTests --sourceMap=false",
+    "test:unit": "yarn test -- --watch -c jest-unit-config.js ",
     "test:integration": "yarn test -- --watch -c jest-integration-config.js",
     "test:staged": "yarn test -- --findRelatedTests",
     "test:ci": "yarn test --  --coverage "
