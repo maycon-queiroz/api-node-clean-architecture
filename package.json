@@ -5,6 +5,7 @@
   "main": "index.js",
   "author": "Maycon Queiroz <fmaycon@gmail.com>",
   "license": "MIT",
+  "__esModule": true,
   "engines": {
     "npm": ">=8.3.0"
   },
@@ -12,17 +13,20 @@
     "source-map": "0.8.0-beta.0"
   },
   "devDependencies": {
+    "@shelf/jest-mongodb": "^4.1.0",
     "husky": "^7.0.0",
-    "jest": "^27.5.1",
+    "jest": "^29.0.1",
+    "jest-environment-node": "^28.1.0",
     "jsonwebtoken": "^8.5.1",
     "lint-staged": "^12.3.7",
+    "mongodb-memory-server": "^8.9.0",
     "standard": "^16.0.4"
   },
   "scripts": {
     "prepare": "husky install",
     "test": "jest --silent --colors --noStackTrace --passWithNoTests",
-    "test:unit": "yarn test -- --watch -c jest-unit-config.js ",
-    "test:integration": "yarn test -- --watch -c jest-integration-config.js",
+    "test:unit": "yarn test -- --watchAll -c jest-unit-config.js ",
+    "test:integration": "yarn test -- --watchAll -c jest-integration-config.js",
     "test:staged": "yarn test -- --findRelatedTests",
     "test:ci": "yarn test --  --coverage "
   },
@@ -33,6 +37,7 @@
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "mongodb": "^4.9.0",
     "validator": "^13.7.0"
   }
 }
