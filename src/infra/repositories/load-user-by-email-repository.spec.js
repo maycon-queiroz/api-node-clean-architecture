@@ -53,4 +53,16 @@ describe('LoadUserByEmail Repository', () => {
     }
     expect(error).toEqual(new MissingParamError('userModel'))
   })
+
+  test('Should return throw if no email is provider', async () => {
+    const { sut } = makeSut()
+    let error
+
+    try {
+      await sut.load()
+    } catch (e) {
+      error = e
+    }
+    expect(error).toEqual(new MissingParamError('email'))
+  })
 })
