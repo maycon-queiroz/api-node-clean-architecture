@@ -27,10 +27,10 @@
     "start": "node src/main/index.js",
     "prepare": "husky install",
     "test": "jest --colors --noStackTrace --passWithNoTests --detectOpenHandles",
-    "test:unit": "yarn test -- -c jest-unit-config.js ",
-    "test:integration": "yarn test -- -c jest-integration-config.js --detectOpenHandles",
-    "test:staged": "yarn test --silent -- --findRelatedTests --detectOpenHandles",
-    "test:ci": "yarn test --silent -- --coverage "
+    "test:unit": "yarn test -c jest-unit-config.js",
+    "test:integration": "yarn test -c jest-integration-config.js  --forceExit",
+    "test:staged": "yarn test --silent --findRelatedTests --detectOpenHandles",
+    "test:ci": "yarn test --silent --coverage "
   },
   "standard": {
     "env": [
