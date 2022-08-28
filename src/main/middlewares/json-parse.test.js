@@ -4,7 +4,7 @@ const app = require('../config/app')
 describe('JSON Parse Middlewares', () => {
   test('Should parse body as JSON', async () => {
     app.post('/test_json_parse', (request, response) => {
-      response.json(request.body)
+      response.send(request.body)
     })
 
     await request(app)
