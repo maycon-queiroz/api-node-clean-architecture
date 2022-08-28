@@ -26,10 +26,10 @@
   "scripts": {
     "start": "node src/main/index.js",
     "prepare": "husky install",
-    "test": "jest --colors --noStackTrace --passWithNoTests --detectOpenHandles",
+    "test": "jest --colors --noStackTrace --passWithNoTests --detectOpenHandles --runInBand --forceExit",
     "test:unit": "yarn test -c jest-unit-config.js",
-    "test:integration": "yarn test -c jest-integration-config.js  --forceExit",
-    "test:staged": "yarn test --silent --findRelatedTests --detectOpenHandles",
+    "test:integration": "yarn test -c jest-integration-config.js ",
+    "test:staged": "yarn test --silent --findRelatedTests",
     "test:ci": "yarn test --silent --coverage "
   },
   "standard": {
