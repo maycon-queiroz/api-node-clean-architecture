@@ -2,7 +2,7 @@
   "name": "api_node_tdd",
   "version": "1.0.0",
   "description": "learn clean architecture nodejs api",
-  "main": "index.js",
+  "main": "src/main/index.js",
   "author": "Maycon Queiroz <fmaycon@gmail.com>",
   "license": "MIT",
   "__esModule": true,
@@ -23,6 +23,7 @@
     "standard": "*"
   },
   "scripts": {
+    "start": "node src/main/index.js",
     "prepare": "husky install",
     "test": "jest --colors  --noStackTrace --passWithNoTests --detectOpenHandles",
     "test:unit": "yarn test -- --watch -c jest-unit-config.js --detectOpenHandles",
@@ -37,6 +38,7 @@
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "express": "^4.18.1",
     "mongodb": "^4.9.0",
     "validator": "^13.7.0"
   }
