@@ -5,9 +5,14 @@
 
 module.exports = {
   preset: '@shelf/jest-mongodb',
-  verbose: true,
-  collectCoverage: true,
+  // collectCoverage: true,
   coverageDirectory: 'coverage',
+  testEnvironment: 'node',
   collectCoverageFrom: ['**/src/**/*.js'],
-  coverageProvider: 'v8'
+  coverageProvider: 'v8',
+  verbose: false
+  // skipFiles: [
+  //             '<node_internals>/**',
+  //             '${workspaceFolder}/node_modules/**/*.js',
+  //           ],
 }

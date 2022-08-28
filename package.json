@@ -20,16 +20,17 @@
     "jsonwebtoken": "^8.5.1",
     "lint-staged": "^12.3.7",
     "mongodb-memory-server": "^8.9.0",
-    "standard": "*"
+    "standard": "*",
+    "supertest": "^6.2.4"
   },
   "scripts": {
     "start": "node src/main/index.js",
     "prepare": "husky install",
-    "test": "jest --colors  --noStackTrace --passWithNoTests --detectOpenHandles",
-    "test:unit": "yarn test -- --watch -c jest-unit-config.js --detectOpenHandles",
-    "test:integration": "yarn test -- --watch -c jest-integration-config.js --detectOpenHandles",
+    "test": "jest --colors --noStackTrace --passWithNoTests --detectOpenHandles",
+    "test:unit": "yarn test -- -c jest-unit-config.js ",
+    "test:integration": "yarn test -- -c jest-integration-config.js --detectOpenHandles",
     "test:staged": "yarn test --silent -- --findRelatedTests --detectOpenHandles",
-    "test:ci": "yarn test --silent --  --coverage "
+    "test:ci": "yarn test --silent -- --coverage "
   },
   "standard": {
     "env": [

@@ -1,29 +1,22 @@
 const MongoHelper = require('../helper/mong-helper')
 const MissingParamError = require('../../utils/errors/missing-param-error')
 const { UpdateAccessTokenRepository } = require('./UpdateAccessTokenRepository')
-let db
+let userModel
 
 const makeSut = () => {
-  const userModel = db.collection('users')
-  const sut = new UpdateAccessTokenRepository(userModel)
-  return {
-    sut,
-    userModel
-  }
+  return new UpdateAccessTokenRepository()
 }
 
 describe('updateAccessTokenRepository', () => {
   let fakeUserId
 
   beforeAll(async () => {
-    await MongoHelper.connect(global.__MONGO_URI__)
-    db = await MongoHelper.db
+    await MongoHelper.connect(process.env.MONGO_URL)
+    userModel = await MongoHelper.getCollection('users')
   })
 
   beforeEach(async () => {
-    const userModel = db.collection('users')
     await userModel.deleteMany()
-
     const fakeUser = await userModel.insertOne({
       email: 'valid_email@gmail.com',
       name: 'any_mane',
@@ -40,7 +33,7 @@ describe('updateAccessTokenRepository', () => {
   })
 
   test('Should update the user with the given accessToken', async () => {
-    const { sut, userModel } = makeSut()
+    const sut = makeSut()
     await sut.update(fakeUserId, 'valid_token')
 
     const updatedFakerUser = await userModel.findOne(
@@ -50,19 +43,8 @@ describe('updateAccessTokenRepository', () => {
     expect(updatedFakerUser.accessToken).toBe('valid_token')
   })
 
-  test('Should Throw if no userModel is provided', async () => {
-    const sut = new UpdateAccessTokenRepository()
-    let error
-    try {
-      await sut.update(fakeUserId, 'valid_token')
-    } catch (e) {
-      error = e
-    }
-    expect(error).toEqual(new MissingParamError('userModel'))
-  })
-
   test('Should Throw if no params are provided', async () => {
-    const { sut } = makeSut()
+    const sut = makeSut()
     await expect(sut.update()).rejects.toThrow(new MissingParamError('userId'))
     await expect(sut.update(fakeUserId)).rejects.toThrow(
       new MissingParamError('accessToken')
