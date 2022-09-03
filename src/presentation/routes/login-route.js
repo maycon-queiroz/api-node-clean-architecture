@@ -1,10 +1,13 @@
 const HttpResponse = require('../helpers/http-response')
 const { UnauthorizedError } = require('../errors/index')
-const { MissingParamError, InvalidParamError } = require('../../utils/errors/index')
+const {
+  MissingParamError,
+  InvalidParamError
+} = require('../../utils/errors/index')
 
 module.exports = class LoginRouter {
-  constructor (authUserCase, emailValidator) {
-    this.authUserCase = authUserCase
+  constructor ({ authUseCase, emailValidator } = {}) {
+    this.authUseCase = authUseCase
     this.emailValidator = emailValidator
   }
 
@@ -23,7 +26,7 @@ module.exports = class LoginRouter {
         return HttpResponse.badRequest(new MissingParamError('password'))
       }
 
-      const accessToken = await this.authUserCase.auth(email, password)
+      const accessToken = await this.authUseCase.auth(email, password)
       if (!accessToken) {
         return HttpResponse.unauthorizedError(new UnauthorizedError())
       }
