@@ -8,7 +8,7 @@ module.exports = {
   collectCoverage: true,
   coverageDirectory: 'coverage',
   testEnvironment: 'node',
-  collectCoverageFrom: ['**/src/**/*.js', '!**/src/main/**.js'],
+  collectCoverageFrom: ['**/src/**/*.js', '!**/src/main/**'],
   coverageProvider: 'v8',
   verbose: true
 }

@@ -5,6 +5,6 @@ module.exports = {
     },
     autoStart: false,
     instance: {}
-  },
-  mongoURLEnvName: 'MONGO_URL'
+  }
+  // mongoURLEnvName: 'MONGO_URL'
 }
