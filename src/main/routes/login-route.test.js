@@ -20,16 +20,26 @@ describe('Login Router', () => {
 
   test('Should return 200 when valid credential are provided', async () => {
     await userModel.insertOne({
-      email: 'valid_email@gmail.com',
+      email: 'fmaycon@gmail.com',
       password: bcrypt.hashSync('hashed_password', 10)
     })
 
     await request(app)
       .post('/api/login')
       .send({
-        email: 'valid_email@gmail.com',
+        email: 'fmaycon@gmail.com',
         password: 'hashed_password'
       })
       .expect(200)
+  })
+
+  test('Should return 401 when invalid credential are provided', async () => {
+    await request(app)
+      .post('/api/login')
+      .send({
+        email: 'valid_email@gmail.com',
+        password: 'hashed_password'
+      })
+      .expect(401)
   })
 })
