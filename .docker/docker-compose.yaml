@@ -1,0 +1,27 @@
+version: '3'
+services:  
+  mongo:
+    image: mongo:latest        
+    volumes:
+      - ./data:/data/db
+    ports:
+      - 27017:27017
+    networks:
+      - mongo
+  
+  mongoManagement:
+    image: mongo-express:latest
+    ports:
+      - 8081:8081
+    environment:
+      - ME_CONFIG_BASICAUTH_USERNAME:admin
+      - ME_CONFIG_BASICAUTH_PASSWORD:admin
+      - ME_CONFIG_MONGODB_PORT:27017
+    links:
+      - mongo
+    networks:
+      - mongo
+
+networks: 
+  mongo:
+    driver: bridge
