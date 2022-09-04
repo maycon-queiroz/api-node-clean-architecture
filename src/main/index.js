@@ -1,2 +1,6 @@
 const app = require('./config/app')
-app.listen(5858, () => console.log('Server running'))
+const env = require('./config/env')
+
+app.listen(env.port, () =>
+  console.log(`Server running on http://localhost:${env.port}`)
+)
