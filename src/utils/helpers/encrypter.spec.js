@@ -1,3 +1,13 @@
+jest.mock('bcrypt', () => ({
+  isValid: true,
+
+  async compare (value, hash) {
+    this.value = value
+    this.hash = hash
+    return this.isValid
+  }
+}))
+
 const bcrypt = require('bcrypt')
 const Encrypter = require('./encrypter')
 const MissingParamError = require('../errors/missing-param-error')
@@ -31,6 +41,8 @@ describe('Encrypter', function () {
   test('Should throw if no params are provided', async () => {
     const sut = makeSut()
     expect(sut.compare()).rejects.toMatchObject(new MissingParamError('value'))
-    expect(sut.compare('any_value')).rejects.toMatchObject(new MissingParamError('hash'))
+    expect(sut.compare('any_value')).rejects.toMatchObject(
+      new MissingParamError('hash')
+    )
   })
 })

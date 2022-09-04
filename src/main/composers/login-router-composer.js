@@ -1,5 +1,5 @@
 const LoginRouter = require('../../presentation/routes/login-route')
-const AuthUserCase = require('../../domain/usecases/auth-usecase')
+const AuthUseCase = require('../../domain/usecases/auth-usecase')
 const EmailValidator = require('../../utils/helpers/email-validator')
 const LoadUserByEmailRepository = require('../../infra/repositories/LoadUserByEmailRepository')
 const UpdateAccessTokenRepository = require('../../infra/repositories/UpdateAccessTokenRepository')
@@ -14,14 +14,14 @@ module.exports = class LoginRouterComposer {
     const encrypter = new Encrypter()
     const tokenGenerator = new TokenGenerator(env.tokenSecret)
     const emailValidator = new EmailValidator()
-    const authUserCase = new AuthUserCase({
+    const authUseCase = new AuthUseCase({
       loadUserByEmailRepository,
       updateAccessTokenRepository,
       encrypter,
       tokenGenerator
     })
     return new LoginRouter({
-      authUserCase,
+      authUseCase,
       emailValidator
     })
   }
