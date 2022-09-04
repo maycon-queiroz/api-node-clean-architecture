@@ -55,6 +55,15 @@ const makeAuthUseCase = () => {
   return authUseCaseSpy
 }
 
+const makeAuthUseCaseWithError = () => {
+  class AuthUseCaseSpy {
+    async auth () {
+      throw new Error('')
+    }
+  }
+  return new AuthUseCaseSpy()
+}
+
 describe('Login Router', () => {
   test('Should return 400 if no email is provided', async () => {
     const { sut } = makeSut()
@@ -172,7 +181,7 @@ describe('Login Router', () => {
   test('Should throw if invalid dependency are provided', async () => {
     const invalid = {}
     const authUseCaseSpy = makeAuthUseCase()
-    const emailValidatorSpy = makeEmailValidatorWithError()
+    const emailValidatorSpy = makeEmailValidator()
     const suts = [].concat(
       new LoginRouter(),
       new LoginRouter({}),
@@ -185,6 +194,32 @@ describe('Login Router', () => {
       new LoginRouter({
         authUseCase: invalid,
         emailValidator: emailValidatorSpy
+      })
+    )
+
+    for (const sut of suts) {
+      const httpRequest = {
+        body: {
+          email: 'invalid_any_email',
+          password: 'invalid_any_password'
+        }
+      }
+
+      const httpResponse = await sut.route(httpRequest)
+      expect(httpResponse.statusCode).toBe(500)
+      expect(httpResponse.body).toEqual(new ServerError())
+    }
+  })
+
+  test('Should throw if any dependency return throw', async () => {
+    const suts = [].concat(
+      new LoginRouter({
+        authUseCase: makeAuthUseCaseWithError(),
+        emailValidator: makeEmailValidator()
+      }),
+      new LoginRouter({
+        authUseCase: makeAuthUseCase(),
+        emailValidator: makeEmailValidatorWithError()
       })
     )
 
